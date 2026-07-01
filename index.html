@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A 2D pixel grammar game for practising the simple present, present continuous and simple past tenses." />
+  <title>Tense Fireball Quest</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <div class="title-row">
+      <div>
+        <h1>TENSE FIREBALL QUEST</h1>
+        <p class="subtitle">Aim at the monster carrying the correct verb form.</p>
+      </div>
+      <button id="soundButton" class="sound-button" type="button" aria-pressed="true">SOUND: ON</button>
+    </div>
+
+    <section class="game-frame" aria-label="Tense Fireball Quest game">
+      <canvas id="gameCanvas" width="960" height="540" tabindex="0" aria-label="Game canvas. Move with WASD or arrow keys and shoot with the left mouse button."></canvas>
+
+      <div class="question-panel" id="questionPanel">
+        <span class="tense-badge" id="tenseBadge">Simple Present</span>
+        <p class="question-text" id="questionText">Press Start Adventure to begin.</p>
+      </div>
+
+      <button id="upgradeButton" class="upgrade-button" type="button">UPGRADE FIREBALL<br />50 ENERGY · PRESS U</button>
+
+      <div id="startOverlay" class="overlay">
+        <div class="overlay-card">
+          <h2>TENSE FIREBALL QUEST</h2>
+          <p>
+            Three answer monsters guard each sentence. Read the question, aim carefully,
+            and shoot the monster carrying the correct verb form.
+          </p>
+          <div class="control-grid">
+            <div class="control-item"><kbd>WASD</kbd> or <kbd>↑↓←→</kbd><br />Walk around the arena</div>
+            <div class="control-item"><kbd>LEFT CLICK</kbd><br />Shoot toward the mouse pointer</div>
+            <div class="control-item"><kbd>U</kbd><br />Spend 50 energy to upgrade</div>
+            <div class="control-item"><kbd>P</kbd><br />Pause or continue the game</div>
+          </div>
+          <p>
+            Every correct answer earns points and upgrade energy. After eight correct answers,
+            the Final Boss appears and starts firing back!
+          </p>
+          <button id="startButton" class="primary-button" type="button">START ADVENTURE</button>
+        </div>
+      </div>
+
+      <div id="messageOverlay" class="overlay" hidden>
+        <div class="overlay-card">
+          <h2 id="messageTitle">VICTORY!</h2>
+          <p id="messageText"></p>
+          <button id="restartButton" class="primary-button" type="button">PLAY AGAIN</button>
+        </div>
+      </div>
+
+      <p id="liveStatus" class="sr-only" aria-live="polite"></p>
+    </section>
+
+    <div class="tips" aria-label="Grammar tips">
+      <div class="tip"><strong>Simple Present:</strong> routines and facts. Add <em>-s/-es</em> with he, she and it.</div>
+      <div class="tip"><strong>Present Continuous:</strong> actions happening now. Use <em>am/is/are + verb-ing</em>.</div>
+      <div class="tip"><strong>Simple Past:</strong> finished past actions. Look for clues such as <em>yesterday</em> or <em>last week</em>.</div>
+    </div>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
