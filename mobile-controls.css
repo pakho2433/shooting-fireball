@@ -1,0 +1,213 @@
+.game-frame,
+canvas {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+#upgradeButton {
+  display: none !important;
+}
+
+.mobile-controls {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.joystick-zone {
+  position: absolute;
+  left: max(18px, env(safe-area-inset-left));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  width: 132px;
+  height: 132px;
+  border: 4px solid rgba(255, 247, 214, 0.78);
+  border-radius: 50%;
+  background: rgba(12, 12, 30, 0.62);
+  box-shadow:
+    inset 0 0 0 8px rgba(94, 84, 141, 0.45),
+    5px 5px 0 rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.joystick-zone::before,
+.joystick-zone::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+}
+
+.joystick-zone::before {
+  width: 4px;
+  height: 88px;
+}
+
+.joystick-zone::after {
+  width: 88px;
+  height: 4px;
+}
+
+.joystick-knob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 58px;
+  height: 58px;
+  border: 4px solid #fff7d6;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #62d8ff, #4056a8);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.joystick-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -24px;
+  color: #fff7d6;
+  font: 900 0.68rem "Courier New", monospace;
+  text-align: center;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.tap-to-shoot {
+  position: absolute;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  max-width: 180px;
+  padding: 10px 12px;
+  border: 3px solid rgba(255, 214, 90, 0.9);
+  background: rgba(38, 25, 50, 0.78);
+  color: #fff7d6;
+  font: 900 0.76rem/1.3 "Courier New", monospace;
+  text-align: center;
+  text-shadow: 2px 2px 0 #000;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.hint-panel {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  z-index: 8;
+  width: min(560px, calc(100% - 360px));
+  padding: 10px 14px;
+  border: 4px solid #ffd65a;
+  background: rgba(27, 20, 54, 0.96);
+  color: #ffffff;
+  font: 800 clamp(0.68rem, 1.5vw, 0.9rem)/1.4 "Courier New", monospace;
+  text-align: center;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translate(-50%, 16px) scale(0.96);
+  transition: opacity 180ms ease, transform 180ms ease;
+  pointer-events: none;
+}
+
+.hint-panel[hidden] {
+  display: none;
+}
+
+.hint-panel.hint-visible {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+.hint-title {
+  display: block;
+  margin-bottom: 4px;
+  color: #ffd65a;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.upgrade-signal {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, rgba(255, 214, 90, 0.28), transparent 58%);
+  pointer-events: none;
+}
+
+.upgrade-signal[hidden] {
+  display: none;
+}
+
+.upgrade-signal-card {
+  min-width: min(520px, 80%);
+  padding: 18px 24px;
+  border: 5px solid #fff7d6;
+  background: linear-gradient(135deg, #7d38d5, #1f4770);
+  color: white;
+  text-align: center;
+  box-shadow:
+    8px 8px 0 rgba(0, 0, 0, 0.6),
+    0 0 36px rgba(255, 214, 90, 0.75);
+  transform: scale(0.25) rotate(-5deg);
+  opacity: 0;
+}
+
+.upgrade-signal-active .upgrade-signal-card {
+  animation: upgrade-pop 1.9s steps(6, end) both;
+}
+
+.upgrade-signal-title {
+  display: block;
+  color: #ffd65a;
+  font: 900 clamp(1.2rem, 4vw, 2.4rem) "Courier New", monospace;
+  text-shadow: 4px 4px 0 #7a3328;
+}
+
+.upgrade-signal-text {
+  display: block;
+  margin-top: 7px;
+  font: 900 clamp(0.78rem, 2vw, 1.15rem) "Courier New", monospace;
+}
+
+@keyframes upgrade-pop {
+  0% { transform: scale(0.25) rotate(-5deg); opacity: 0; }
+  18% { transform: scale(1.16) rotate(3deg); opacity: 1; }
+  34% { transform: scale(0.95) rotate(-1deg); opacity: 1; }
+  70% { transform: scale(1) rotate(0); opacity: 1; }
+  100% { transform: scale(1.1) rotate(0); opacity: 0; }
+}
+
+@media (pointer: fine) {
+  .joystick-zone,
+  .tap-to-shoot {
+    opacity: 0.58;
+  }
+}
+
+@media (max-width: 760px), (orientation: portrait) {
+  .joystick-zone {
+    width: 112px;
+    height: 112px;
+  }
+
+  .joystick-knob {
+    width: 50px;
+    height: 50px;
+  }
+
+  .tap-to-shoot {
+    max-width: 135px;
+    font-size: 0.62rem;
+  }
+
+  .hint-panel {
+    bottom: 150px;
+    width: calc(100% - 28px);
+  }
+}
