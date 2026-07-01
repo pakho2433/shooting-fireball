@@ -1,0 +1,160 @@
+.start-card {
+  width: min(760px, 98%);
+}
+
+.student-details {
+  margin: 14px 0;
+  padding: 12px;
+  border: 3px solid #5e548d;
+  background: rgba(10, 9, 26, 0.72);
+  text-align: left;
+}
+
+.student-details h3 {
+  margin: 0 0 10px;
+  color: #ffd65a;
+  text-align: center;
+  font-size: 0.92rem;
+  letter-spacing: 1px;
+}
+
+.student-fields {
+  display: grid;
+  grid-template-columns: 1.6fr 0.8fr 0.8fr;
+  gap: 10px;
+}
+
+.student-fields label {
+  display: grid;
+  gap: 5px;
+  color: #dcd8ff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.student-fields input {
+  min-width: 0;
+  border: 3px solid #504985;
+  border-radius: 0;
+  background: #111027;
+  color: #ffffff;
+  padding: 9px 10px;
+  font: 800 0.88rem "Courier New", monospace;
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.student-fields input::placeholder {
+  color: #817aa7;
+}
+
+.student-fields input:focus {
+  border-color: #ffd65a;
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.student-fields input.input-error {
+  border-color: #ff4d6d;
+}
+
+.student-form-error {
+  min-height: 18px;
+  margin: 7px 0 0 !important;
+  color: #ff8aa0 !important;
+  text-align: center;
+  font-weight: 900;
+}
+
+.privacy-note {
+  margin: 3px 0 0 !important;
+  color: #aaa4d0 !important;
+  text-align: center;
+  font-size: 0.65rem !important;
+}
+
+.student-result-summary {
+  margin: 14px auto;
+  width: min(570px, 100%);
+  border: 3px solid #504985;
+  background: #111027;
+  text-align: left;
+}
+
+.student-result-header {
+  padding: 8px 10px;
+  border-bottom: 2px solid #504985;
+  color: #ffd65a;
+  font-weight: 900;
+  text-align: center;
+}
+
+.student-result-row {
+  display: grid;
+  grid-template-columns: 1.45fr 0.75fr 0.75fr;
+  gap: 6px;
+  padding: 7px 10px;
+  border-bottom: 1px solid #38325f;
+  color: #e7e3ff;
+  font-size: 0.72rem;
+}
+
+.student-result-row:last-child {
+  border-bottom: 0;
+}
+
+.student-result-row strong {
+  color: #ffffff;
+}
+
+.weak-tense-box {
+  padding: 9px 10px;
+  border-top: 2px solid #5e548d;
+  color: #fff3a3;
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.report-status {
+  min-height: 21px;
+  margin: 10px 0 !important;
+  color: #62d8ff !important;
+  font-weight: 900;
+}
+
+.report-status.report-success {
+  color: #66e3a4 !important;
+}
+
+.report-status.report-error {
+  color: #ff8aa0 !important;
+}
+
+.secondary-button {
+  margin: 0 8px 12px;
+  border: 3px solid #62d8ff;
+  background: #1f4770;
+  color: #ffffff;
+  padding: 9px 14px;
+  font: 900 0.78rem "Courier New", monospace;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 #0b1725;
+}
+
+.secondary-button:hover,
+.secondary-button:focus-visible {
+  background: #2d6193;
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .student-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .student-result-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
