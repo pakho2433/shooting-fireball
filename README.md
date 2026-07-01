@@ -10,14 +10,14 @@ A browser-based 2D pixel game for practising:
 
 **Game page:** https://pakho2433.github.io/shooting-fireball/
 
-The game is designed for iPad, tablet and desktop browsers.
+The game is designed for phones, iPad, tablets and desktop browsers. It automatically fits the visible screen size and prevents the main page from scrolling during play. Landscape mode gives phone players a larger arena, but portrait mode is also supported.
 
 ## How to play
 
 1. Enter the student's **name, class and class number**.
 2. Read the sentence at the top of the screen.
-3. On iPad, move with the **on-screen joystick**. On a computer, use **WASD** or the **arrow keys**.
-4. **Tap the game screen** on iPad, or left-click on a computer, to shoot toward a target.
+3. On a touch device, move with the **on-screen joystick**. On a computer, use **WASD** or the **arrow keys**.
+4. **Tap the game screen** on a phone or iPad, or left-click on a computer, to shoot toward a target.
 5. Hit the moving monster carrying the correct verb form.
 6. The fireball upgrades automatically at **50 points** and **100 points**.
 7. There is no life limit. Students can keep trying.
@@ -26,6 +26,10 @@ The game is designed for iPad, tablet and desktop browsers.
 10. When the game ends, the student's tense performance report is submitted to the teacher.
 
 Press **P** on a computer to pause.
+
+## Responsive display
+
+The game uses the real visible browser height, including changes caused by mobile address bars, device rotation and the on-screen keyboard. On smaller screens, the title and extra tip boxes are hidden automatically so the whole game remains visible without page scrolling.
 
 ## Result report
 
