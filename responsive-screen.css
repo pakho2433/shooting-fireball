@@ -1,0 +1,342 @@
+/* Full-screen responsive shell for phones, tablets and desktop browsers. */
+:root {
+  --app-height: 100dvh;
+  --app-width: 100vw;
+  --shell-gap: 8px;
+}
+
+html,
+body {
+  width: 100%;
+  height: var(--app-height);
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding:
+    max(6px, env(safe-area-inset-top))
+    max(6px, env(safe-area-inset-right))
+    max(6px, env(safe-area-inset-bottom))
+    max(6px, env(safe-area-inset-left));
+}
+
+.page-shell {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: 1120px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--shell-gap);
+  align-items: center;
+  justify-items: center;
+}
+
+.title-row,
+.tips {
+  width: 100%;
+}
+
+.game-frame {
+  width: min(100%, calc((var(--app-height) - 150px) * 16 / 9));
+  height: auto;
+  max-width: 100%;
+  max-height: calc(var(--app-height) - 150px);
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  align-self: center;
+  justify-self: center;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+/* Compact app mode: the game becomes the whole visible page. */
+@media (max-width: 900px), (max-height: 760px) {
+  body {
+    padding:
+      max(2px, env(safe-area-inset-top))
+      max(2px, env(safe-area-inset-right))
+      max(2px, env(safe-area-inset-bottom))
+      max(2px, env(safe-area-inset-left));
+  }
+
+  .page-shell {
+    max-width: none;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .title-row,
+  .tips {
+    display: none;
+  }
+
+  .game-frame {
+    width: min(100%, calc(var(--app-height) * 16 / 9));
+    max-height: 100%;
+    border-width: 3px;
+    box-shadow: none;
+  }
+}
+
+/* Landscape phones use nearly every available pixel. */
+@media (orientation: landscape) and (max-height: 560px) {
+  .game-frame {
+    width: min(100%, calc(var(--app-height) * 16 / 9));
+    height: min(100%, calc(100vw * 9 / 16));
+  }
+
+  .question-panel {
+    top: 5px;
+    width: min(690px, calc(100% - 190px));
+    padding: 5px 9px 6px;
+  }
+
+  .tense-badge {
+    margin-bottom: 2px;
+    padding: 1px 5px;
+    font-size: clamp(0.43rem, 1.3vw, 0.62rem);
+  }
+
+  .question-text {
+    font-size: clamp(0.56rem, 1.55vw, 0.9rem);
+    line-height: 1.18;
+  }
+
+  .joystick-zone {
+    left: max(10px, env(safe-area-inset-left));
+    bottom: max(10px, env(safe-area-inset-bottom));
+    width: clamp(72px, 18vh, 104px);
+    height: clamp(72px, 18vh, 104px);
+    border-width: 3px;
+  }
+
+  .joystick-zone::before {
+    height: 60%;
+  }
+
+  .joystick-zone::after {
+    width: 60%;
+  }
+
+  .joystick-knob {
+    width: 42%;
+    height: 42%;
+    border-width: 3px;
+  }
+
+  .joystick-caption {
+    display: none;
+  }
+
+  .tap-to-shoot {
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    padding: 6px 8px;
+    border-width: 2px;
+    font-size: 0.54rem;
+  }
+
+  .hint-panel {
+    bottom: 8px;
+    width: min(520px, calc(100% - 250px));
+    padding: 6px 9px;
+    border-width: 3px;
+    font-size: 0.62rem;
+  }
+
+  .hint-title {
+    margin-bottom: 2px;
+    font-size: 0.74rem;
+  }
+}
+
+/* Portrait phones keep the full 16:9 arena visible without page scrolling. */
+@media (orientation: portrait) and (max-width: 700px) {
+  .game-frame {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+
+  .joystick-zone {
+    left: 8px;
+    bottom: 8px;
+    width: clamp(62px, 18vw, 82px);
+    height: clamp(62px, 18vw, 82px);
+    border-width: 2px;
+    box-shadow: inset 0 0 0 4px rgba(94, 84, 141, 0.45), 3px 3px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .joystick-zone::before {
+    height: 58%;
+    width: 2px;
+  }
+
+  .joystick-zone::after {
+    width: 58%;
+    height: 2px;
+  }
+
+  .joystick-knob {
+    width: 42%;
+    height: 42%;
+    border-width: 2px;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .joystick-caption,
+  .tap-to-shoot {
+    display: none;
+  }
+
+  .question-panel {
+    top: 3px;
+    width: calc(100% - 120px);
+    padding: 3px 6px 4px;
+    border-width: 2px;
+  }
+
+  .tense-badge {
+    margin-bottom: 1px;
+    padding: 0 4px;
+    border-width: 1px;
+    font-size: clamp(0.36rem, 1.8vw, 0.5rem);
+  }
+
+  .question-text {
+    font-size: clamp(0.43rem, 2.3vw, 0.68rem);
+    line-height: 1.12;
+  }
+
+  .hint-panel {
+    bottom: 5px;
+    width: calc(100% - 180px);
+    padding: 4px 6px;
+    border-width: 2px;
+    font-size: 0.48rem;
+    line-height: 1.18;
+  }
+
+  .hint-title {
+    display: inline;
+    margin-right: 4px;
+    font-size: 0.54rem;
+  }
+
+  /* Start and result forms use the whole portrait screen rather than the short arena. */
+  .overlay {
+    position: fixed;
+    inset:
+      env(safe-area-inset-top)
+      env(safe-area-inset-right)
+      env(safe-area-inset-bottom)
+      env(safe-area-inset-left);
+    padding: 8px;
+  }
+
+  .overlay-card {
+    width: min(520px, 100%);
+    max-height: 100%;
+    padding: 12px;
+    overscroll-behavior: contain;
+  }
+
+  .overlay-card h2 {
+    font-size: 1.2rem;
+  }
+
+  .overlay-card > p:first-of-type,
+  .start-card .control-grid,
+  .start-card > p:last-of-type,
+  .privacy-note {
+    display: none;
+  }
+
+  .student-details {
+    margin: 8px 0;
+    padding: 9px;
+  }
+
+  .student-fields {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .student-fields input {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    padding: 9px 14px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Very short windows still keep the start form reachable inside its own panel. */
+@media (max-height: 430px) {
+  .overlay {
+    padding: 4px;
+  }
+
+  .overlay-card {
+    width: min(760px, 100%);
+    max-height: 100%;
+    padding: 8px 12px;
+  }
+
+  .overlay-card h2 {
+    margin-bottom: 4px;
+    font-size: 1rem;
+  }
+
+  .overlay-card > p:first-of-type,
+  .start-card > p:last-of-type,
+  .privacy-note {
+    display: none;
+  }
+
+  .student-details {
+    margin: 5px 0;
+    padding: 6px 8px;
+  }
+
+  .student-details h3 {
+    margin-bottom: 5px;
+  }
+
+  .student-fields input {
+    padding: 6px 7px;
+    font-size: 16px;
+  }
+
+  .control-grid {
+    margin: 6px 0;
+    gap: 4px;
+  }
+
+  .control-item {
+    padding: 4px 6px;
+    font-size: 0.55rem;
+  }
+
+  .primary-button {
+    padding: 7px 14px;
+    font-size: 0.72rem;
+  }
+}
