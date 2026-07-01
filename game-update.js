@@ -1,3 +1,100 @@
+function initialiseMonsterMotion(monster) {
+  const speed = state.screen === "boss" ? randomBetween(55, 82) : randomBetween(68, 102);
+  const angle = randomBetween(0, Math.PI * 2);
+  monster.vx = Math.cos(angle) * speed;
+  monster.vy = Math.sin(angle) * speed;
+  monster.turnTimer = randomBetween(1.2, 2.8);
+}
+
+function updateMonsterMovement(dt) {
+  const activeMonsters = state.monsters.filter(monster => monster.alive);
+
+  for (const monster of activeMonsters) {
+    if (!Number.isFinite(monster.vx) || !Number.isFinite(monster.vy)) {
+      initialiseMonsterMotion(monster);
+    }
+
+    monster.phase += dt * 2.6;
+    monster.turnTimer -= dt;
+
+    // Make the monsters occasionally change direction so that their paths
+    // feel alive without becoming too fast or unpredictable for pupils.
+    if (monster.turnTimer <= 0) {
+      const speed = Math.hypot(monster.vx, monster.vy);
+      const currentAngle = Math.atan2(monster.vy, monster.vx);
+      const newAngle = currentAngle + randomBetween(-0.7, 0.7);
+      monster.vx = Math.cos(newAngle) * speed;
+      monster.vy = Math.sin(newAngle) * speed;
+      monster.turnTimer = randomBetween(1.2, 2.8);
+    }
+
+    monster.x += monster.vx * dt;
+    monster.y += monster.vy * dt;
+
+    // Leave extra room above each monster for its moving answer label.
+    const minX = state.screen === "boss" ? 245 + monster.radius : 260 + monster.radius;
+    const maxX = state.screen === "boss" ? 690 - monster.radius : WIDTH - monster.radius - 22;
+    const minY = ARENA_TOP + monster.radius + 42;
+    const maxY = HEIGHT - monster.radius - 18;
+
+    if (monster.x <= minX) {
+      monster.x = minX;
+      monster.vx = Math.abs(monster.vx);
+    } else if (monster.x >= maxX) {
+      monster.x = maxX;
+      monster.vx = -Math.abs(monster.vx);
+    }
+
+    if (monster.y <= minY) {
+      monster.y = minY;
+      monster.vy = Math.abs(monster.vy);
+    } else if (monster.y >= maxY) {
+      monster.y = maxY;
+      monster.vy = -Math.abs(monster.vy);
+    }
+
+    monster.hitFlash = Math.max(0, monster.hitFlash - dt);
+    monster.wrongFlash = Math.max(0, monster.wrongFlash - dt);
+  }
+
+  // Gently separate monsters when they touch so their answer labels remain readable.
+  for (let firstIndex = 0; firstIndex < activeMonsters.length; firstIndex++) {
+    for (let secondIndex = firstIndex + 1; secondIndex < activeMonsters.length; secondIndex++) {
+      const first = activeMonsters[firstIndex];
+      const second = activeMonsters[secondIndex];
+      let dx = second.x - first.x;
+      let dy = second.y - first.y;
+      let distance = Math.hypot(dx, dy);
+      const minimumDistance = first.radius + second.radius + 24;
+
+      if (distance < minimumDistance) {
+        if (distance === 0) {
+          dx = 1;
+          dy = 0;
+          distance = 1;
+        }
+
+        const normalX = dx / distance;
+        const normalY = dy / distance;
+        const overlap = (minimumDistance - distance) / 2;
+        first.x -= normalX * overlap;
+        first.y -= normalY * overlap;
+        second.x += normalX * overlap;
+        second.y += normalY * overlap;
+
+        const firstAlongNormal = first.vx * normalX + first.vy * normalY;
+        const secondAlongNormal = second.vx * normalX + second.vy * normalY;
+        const velocityDifference = secondAlongNormal - firstAlongNormal;
+
+        first.vx += velocityDifference * normalX;
+        first.vy += velocityDifference * normalY;
+        second.vx -= velocityDifference * normalX;
+        second.vy -= velocityDifference * normalY;
+      }
+    }
+  }
+}
+
 function update(dt) {
   if (state.paused || !["battle", "boss"].includes(state.screen)) {
     updateParticles(dt);
@@ -34,13 +131,7 @@ function update(dt) {
   player.x = clamp(player.x, 24, rightLimit);
   player.y = clamp(player.y, ARENA_TOP + 24, HEIGHT - 28);
 
-  for (const monster of state.monsters) {
-    monster.phase += dt * 2.6;
-    monster.y = monster.baseY + Math.sin(monster.phase) * 7;
-    monster.hitFlash = Math.max(0, monster.hitFlash - dt);
-    monster.wrongFlash = Math.max(0, monster.wrongFlash - dt);
-  }
-
+  updateMonsterMovement(dt);
   updateFireballs(dt);
   updateParticles(dt);
   updateFloatingTexts(dt);
