@@ -6,6 +6,7 @@
   <meta name="description" content="A 2D pixel grammar game for practising the simple present, present continuous and simple past tenses." />
   <title>Tense Fireball Quest</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="student-report.css" />
 </head>
 <body>
   <main class="page-shell">
@@ -28,12 +29,35 @@
       <button id="upgradeButton" class="upgrade-button" type="button">UPGRADE FIREBALL<br />50 ENERGY · PRESS U</button>
 
       <div id="startOverlay" class="overlay">
-        <div class="overlay-card">
+        <div class="overlay-card start-card">
           <h2>TENSE FIREBALL QUEST</h2>
           <p>
-            Three answer monsters guard each sentence. Read the question, aim carefully,
+            Three moving answer monsters guard each sentence. Read the question, aim carefully,
             and shoot the monster carrying the correct verb form.
           </p>
+
+          <div class="student-details" aria-labelledby="studentDetailsTitle">
+            <h3 id="studentDetailsTitle">STUDENT DETAILS</h3>
+            <div class="student-fields">
+              <label>
+                <span>Name</span>
+                <input id="studentName" type="text" maxlength="60" autocomplete="name" placeholder="e.g. Mary Chan" required />
+              </label>
+              <label>
+                <span>Class</span>
+                <input id="studentClass" type="text" maxlength="20" autocomplete="off" placeholder="e.g. 5A" required />
+              </label>
+              <label>
+                <span>Class number</span>
+                <input id="studentNumber" type="text" maxlength="10" inputmode="numeric" autocomplete="off" placeholder="e.g. 12" required />
+              </label>
+            </div>
+            <p id="studentFormError" class="student-form-error" role="alert"></p>
+            <p class="privacy-note">
+              Your name, class, class number and game results will be sent to your teacher at the end of the game.
+            </p>
+          </div>
+
           <div class="control-grid">
             <div class="control-item"><kbd>WASD</kbd> or <kbd>↑↓←→</kbd><br />Walk around the arena</div>
             <div class="control-item"><kbd>LEFT CLICK</kbd><br />Shoot toward the mouse pointer</div>
@@ -52,6 +76,9 @@
         <div class="overlay-card">
           <h2 id="messageTitle">VICTORY!</h2>
           <p id="messageText"></p>
+          <div id="studentResultSummary" class="student-result-summary"></div>
+          <p id="reportStatus" class="report-status" role="status" aria-live="polite"></p>
+          <button id="retryReportButton" class="secondary-button" type="button" hidden>SEND RESULT AGAIN</button>
           <button id="restartButton" class="primary-button" type="button">PLAY AGAIN</button>
         </div>
       </div>
@@ -69,6 +96,7 @@
   <script src="game-core.js"></script>
   <script src="game-update.js"></script>
   <script src="game-render.js"></script>
+  <script src="student-report.js"></script>
   <script src="game-input.js"></script>
 </body>
 </html>
