@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="description" content="A 2D pixel grammar game for practising the simple present, present continuous and simple past tenses." />
   <title>Tense Fireball Quest</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="student-report.css" />
+  <link rel="stylesheet" href="mobile-controls.css" />
 </head>
 <body>
   <main class="page-shell">
@@ -19,14 +20,34 @@
     </div>
 
     <section class="game-frame" aria-label="Tense Fireball Quest game">
-      <canvas id="gameCanvas" width="960" height="540" tabindex="0" aria-label="Game canvas. Move with WASD or arrow keys and shoot with the left mouse button."></canvas>
+      <canvas id="gameCanvas" width="960" height="540" tabindex="0" aria-label="Game canvas. Move with the on-screen joystick, WASD or arrow keys. Tap or click the arena to shoot."></canvas>
 
       <div class="question-panel" id="questionPanel">
         <span class="tense-badge" id="tenseBadge">Simple Present</span>
         <p class="question-text" id="questionText">Press Start Adventure to begin.</p>
       </div>
 
-      <button id="upgradeButton" class="upgrade-button" type="button">UPGRADE FIREBALL<br />50 ENERGY · PRESS U</button>
+      <button id="upgradeButton" class="upgrade-button" type="button" hidden aria-hidden="true">AUTOMATIC UPGRADE</button>
+
+      <div id="mobileControls" class="mobile-controls" aria-label="Touch controls">
+        <div id="joystickZone" class="joystick-zone" role="application" aria-label="Movement joystick">
+          <div id="joystickKnob" class="joystick-knob"></div>
+          <span class="joystick-caption">MOVE</span>
+        </div>
+        <div class="tap-to-shoot">TAP ANY TARGET<br />TO SHOOT</div>
+      </div>
+
+      <div id="hintPanel" class="hint-panel" hidden>
+        <strong class="hint-title">GRAMMAR HINT</strong>
+        <span id="hintText"></span>
+      </div>
+
+      <div id="upgradeSignal" class="upgrade-signal" hidden aria-live="assertive">
+        <div class="upgrade-signal-card">
+          <strong id="upgradeSignalTitle" class="upgrade-signal-title">50 POINTS!</strong>
+          <span id="upgradeSignalText" class="upgrade-signal-text">FIREBALL UPGRADED</span>
+        </div>
+      </div>
 
       <div id="startOverlay" class="overlay">
         <div class="overlay-card start-card">
@@ -59,14 +80,13 @@
           </div>
 
           <div class="control-grid">
-            <div class="control-item"><kbd>WASD</kbd> or <kbd>↑↓←→</kbd><br />Walk around the arena</div>
-            <div class="control-item"><kbd>LEFT CLICK</kbd><br />Shoot toward the mouse pointer</div>
-            <div class="control-item"><kbd>U</kbd><br />Spend 50 energy to upgrade</div>
-            <div class="control-item"><kbd>P</kbd><br />Pause or continue the game</div>
+            <div class="control-item"><kbd>JOYSTICK</kbd><br />Move around on iPad</div>
+            <div class="control-item"><kbd>TAP SCREEN</kbd><br />Shoot toward the target</div>
+            <div class="control-item"><kbd>AUTO</kbd><br />Fireball upgrades at 50 and 100 points</div>
+            <div class="control-item"><kbd>HINT</kbd><br />A hint appears after two wrong answers</div>
           </div>
           <p>
-            Every correct answer earns points and upgrade energy. After eight correct answers,
-            the Final Boss appears and starts firing back!
+            There is no life limit. Keep learning, avoid the Final Boss bullets and try again whenever you make a mistake.
           </p>
           <button id="startButton" class="primary-button" type="button">START ADVENTURE</button>
         </div>
@@ -97,6 +117,7 @@
   <script src="game-update.js"></script>
   <script src="game-render.js"></script>
   <script src="student-report.js"></script>
+  <script src="ipad-enhancements.js"></script>
   <script src="game-input.js"></script>
 </body>
 </html>
